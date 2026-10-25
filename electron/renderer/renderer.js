@@ -46,7 +46,7 @@ async function doParse() {
   const source = sourceEl.value
   const input = inputEl.value.trim()
   if (!input) {
-    showStatus('请输入歌单链接或酷狗码', true)
+    showStatus('请粘贴歌单分享链接', true)
     return
   }
   setBusy(true)

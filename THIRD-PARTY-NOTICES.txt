@@ -32,6 +32,8 @@
    文件格式参照上游 src/common/utils/nodejs.ts 与列表导入导出相关代码。
 9. 新增备份歌单到 GitHub 仓库的功能（src/sync.js、src/git-sync.js、src/github-sync.js），
    为本项目新写代码，不含上游代码。
+10. 酷狗歌单（src/sources/kg/songList.js）：歌曲列表改用 get_other_list_file 接口
+    （原 song_v2 接口已被酷狗限制，导致酷狗码和分享链接都无法解析）；酷狗码无效或过期时给出明确提示。
 
 本项目为独立的衍生作品，非 lx-music-desktop 官方项目，与其作者无关。
 

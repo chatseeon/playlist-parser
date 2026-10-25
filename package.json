@@ -1,6 +1,6 @@
 {
   "name": "playlist-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "歌单解析器：把歌单整理成文字歌单并备份到 GitHub（Windows 便携版）",
   "type": "module",
   "main": "electron/main.cjs",

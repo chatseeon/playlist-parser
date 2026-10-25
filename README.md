@@ -122,6 +122,7 @@ $env:ELECTRON_BUILDER_BINARIES_MIRROR = "https://npmmirror.com/mirrors/electron-
 
 ## 已知问题
 
+- **提示「酷狗码无效或已过期」**：酷狗码有有效期。请在酷狗 App 里重新生成，或打开歌单 → 分享 → 复制链接，改用分享链接。
 - **提示「Windows 已保护你的电脑」**：exe 没有数字签名。点「更多信息 → 仍要运行」即可。
 - **设置无法保存**：设置写在 exe 所在文件夹，请不要把 exe 放在 `C:\Program Files` 等没有写入权限的位置。
 - **构建时报错 `Cannot create symbolic link` / `客户端没有所需的特权`**：Windows 默认不允许普通用户创建符号链接。
@@ -129,6 +130,22 @@ $env:ELECTRON_BUILDER_BINARIES_MIRROR = "https://npmmirror.com/mirrors/electron-
   删除 `%LOCALAPPDATA%\electron-builder\Cache\winCodeSign` 后重新构建。
 - **构建时下载超时 / `ECONNRESET`**：按上面设置镜像后重试。
 - **卸载**：删掉 exe 和同目录的 `sync-config.json`；`%APPDATA%\playlist-parser` 下的运行缓存也可以一并删除。
+
+## 更新日志
+
+### 1.0.1（2026-10-26）
+
+- 修复酷狗歌单无论用分享链接还是酷狗码都解析失败的问题（酷狗调整了接口）
+- 酷狗码无效或过期时，给出明确提示，不再只显示 `try max num`
+- 输入框提示改为推荐粘贴分享链接
+
+### 1.0.0（2026-10-25）
+
+- 首次发布
+- 解析酷狗、网易云、QQ 音乐、咪咕、酷我的歌单，导出文字歌单和 JSON
+- 导入 LX Music 导出的歌单文件（`.lxmc` / `.json`）
+- 备份歌单到 GitHub（git 模式 / 令牌模式）
+- Windows 便携版
 
 ## 许可证与来源
 

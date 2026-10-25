@@ -328,6 +328,7 @@ export default {
   },
 
   async getUserListDetailByCode(id) {
+    // 修改：码不存在或已过期时接口返回 err_code 33010，给出明确提示而不是 try max num
     const songInfo = await this.createHttp('http://t.kugou.com/command/', {
       method: 'POST',
       headers: {
@@ -336,6 +337,8 @@ export default {
         'User-Agent': '',
       },
       body: { appid: 1001, clientver: 9020, mid: '21511157a05844bd085308bc76ef3343', clienttime: 640612895, key: '36164c4015e704673c588ee202b9ecb8', data: id },
+    }).catch(() => {
+      throw new Error('酷狗码无效或已过期，请在酷狗 App 里重新生成酷狗码，或改用歌单分享链接')
     })
     // console.log(songInfo)
     // type 1单曲，2歌单，3电台，4酷狗码，5别人的播放队列
@@ -472,23 +475,14 @@ export default {
       },
     }
   },
+  // 修改：上游用的 mobiles.kugou.com/api/v5/special/song_v2 现在固定返回 20028「操作太频繁」，
+  // 改用上游注释代码里的 get_other_list_file 接口。每页最多 300 首，pagesize 固定才能正确分页。
   createGetListDetail2Task(id, total) {
+    const limit = 300
     let tasks = []
-    let page = 0
-    while (total) {
-      const limit = total > 300 ? 300 : total
-      total -= limit
-      page += 1
-      const params = 'appid=1058&global_specialid=' + id + '&specialid=0&plat=0&version=8000&page=' + page + '&pagesize=' + limit + '&srcappid=2919&clientver=20000&clienttime=1586163263991&mid=1586163263991&uuid=1586163263991&dfid=-'
-      tasks.push(this.createHttp(`https://mobiles.kugou.com/api/v5/special/song_v2?${params}&signature=${signatureParams(params, 'web')}`, {
-        headers: {
-          mid: '1586163263991',
-          Referer: 'https://m3ws.kugou.com/share/index.php',
-          'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
-          dfid: '-',
-          clienttime: '1586163263991',
-        },
-      }).then(data => data.info))
+    for (let page = 1; (page - 1) * limit < total; page++) {
+      const params = `specialid=0&need_sort=1&module=CloudMusic&clientver=11409&pagesize=${limit}&global_collection_id=${id}&userid=0&page=${page}&type=1&area_code=1&appid=1005`
+      tasks.push(this.createHttp(`http://pubsongscdn.kugou.com/v2/get_other_list_file?${params}&signature=${signatureParams(params)}`).then(data => data.info))
     }
     return Promise.all(tasks).then(([...datas]) => datas.flat())
   },
