@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>歌单解析器</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>歌单解析器</h1>
+      <p class="sub">输入歌单链接或酷狗码，一键解析并导出</p>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <label class="field">
+          <span class="label">平台</span>
+          <select id="source">
+            <option value="kg">酷狗音乐</option>
+            <option value="wy">网易音乐</option>
+            <option value="tx">QQ 音乐</option>
+            <option value="mg">咪咕音乐</option>
+            <option value="kw">酷我音乐</option>
+          </select>
+        </label>
+        <label class="field grow">
+          <span class="label">链接或码</span>
+          <input id="input" type="text" placeholder="例如酷狗码 12345678，或歌单链接" />
+        </label>
+      </div>
+      <div class="row actions">
+        <label class="check">
+          <input id="all" type="checkbox" />
+          <span>拉取全部歌曲（跨页）</span>
+        </label>
+        <div class="result-actions">
+          <button id="importBtn" class="btn">导入 LX 歌单文件</button>
+          <button id="parseBtn" class="btn primary">解析</button>
+        </div>
+      </div>
+    </section>
+
+    <details id="syncPanel" class="card sync-panel">
+      <summary>GitHub 备份设置 <span id="syncState" class="meta"></span></summary>
+      <div class="row">
+        <label class="field">
+          <span class="label">备份方式</span>
+          <select id="syncMode">
+            <option value="auto">自动（有 git 用 git）</option>
+            <option value="git">git（用电脑已有登录）</option>
+            <option value="token">令牌（不需要 git）</option>
+          </select>
+        </label>
+        <label class="field grow">
+          <span class="label">仓库（用户名/仓库名，或完整地址）</span>
+          <input id="syncRepo" type="text" placeholder="例如 yourname/my-playlists" />
+        </label>
+      </div>
+      <div class="row">
+        <label class="field grow">
+          <span class="label">分支（留空用默认分支）</span>
+          <input id="syncBranch" type="text" placeholder="main" />
+        </label>
+        <label class="field grow">
+          <span class="label">仓库内目录</span>
+          <input id="syncDir" type="text" placeholder="playlists" />
+        </label>
+      </div>
+      <div class="row" id="tokenRow">
+        <label class="field grow">
+          <span class="label">令牌（Fine-grained token，只需该仓库的 Contents 读写权限）</span>
+          <input id="syncToken" type="password" autocomplete="off" placeholder="github_pat_..." />
+        </label>
+      </div>
+      <p id="syncHint" class="meta"></p>
+      <div class="row actions">
+        <label class="check">
+          <input id="syncAuto" type="checkbox" />
+          <span>解析/导入后自动备份</span>
+        </label>
+        <div class="result-actions">
+          <button id="syncClearToken" class="btn">清除令牌</button>
+          <button id="syncTest" class="btn">测试连接</button>
+          <button id="syncSave" class="btn primary">保存</button>
+        </div>
+      </div>
+    </details>
+
+    <section id="result" class="card result" hidden>
+      <div class="result-head">
+        <div>
+          <h2 id="name">-</h2>
+          <p id="meta" class="meta"></p>
+        </div>
+        <div class="result-actions">
+          <button id="exportMd" class="btn">导出文字歌单</button>
+          <button id="exportJson" class="btn">导出 JSON</button>
+          <button id="syncBtn" class="btn primary">备份到 GitHub</button>
+        </div>
+      </div>
+      <div id="songList" class="song-list"></div>
+    </section>
+
+    <div id="status" class="status" role="status" hidden></div>
+  </div>
+
+  <script src="./renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+node_modules/
+# 构建产物
+release/
+dist/
+
+# 本地导出的歌单文件，避免误传个人数据
+*.lxmc
+lx_list*.json
+*_歌名和作者.md
+
+npm-debug.log*
+.DS_Store
+Thumbs.db
