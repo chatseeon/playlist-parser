@@ -10,6 +10,9 @@
 -  备份到自己的 GitHub 仓库：装了 git 直接用 git，没有 git 用令牌
 -  便携版：一个 exe 文件，不用安装，双击即用
 
+## 效果展示
+<img width="1258" height="988" alt="image" src="https://github.com/user-attachments/assets/b455dd29-8108-4dcb-9bea-494dc0c6023d" />
+
 ## 本项目的定位
 
 这是一个**独立的小工具**
