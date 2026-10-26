@@ -157,7 +157,7 @@ $env:ELECTRON_BUILDER_BINARIES_MIRROR = "https://npmmirror.com/mirrors/electron-
 歌单解析部分改编自 [lyswhut/lx-music-desktop](https://github.com/lyswhut/lx-music-desktop)（LX Music 桌面版，Apache-2.0）。
 具体改动见 [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt)。
 
-本项目是独立的衍生作品，**非 LX Music 官方项目，
+本项目是独立的衍生作品，非 LX Music 官方项目，
 LX Music 作者不对本项目负责；「LX Music」「洛雪音乐」名称仅用于说明代码来源和文件格式兼容性。
 
 ## 免责声明
